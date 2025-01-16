@@ -1,0 +1,34 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "[![Actions Status](https://github.com/Makkini/frontend-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Makkini/frontend-project-46/actions)",
+  "homepage": "https://github.com/Makkini/frontend-project-46#readme",
+  "bugs": {
+    "url": "https://github.com/Makkini/frontend-project-46/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Makkini/frontend-project-46.git"
+  },
+  "license": "ISC",
+  "author": "makkinni",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "commander": "^13.0.0"
+  },
+  "bin": {
+    "gendiff": "src/gendiff.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.31.0",
+    "globals": "^15.14.0"
+  }
+}
