@@ -11,4 +11,5 @@
 
 ## Скриншоты тестов
 ![Json-diff](images/jsondiff.JPG)
+![YML-diff](images/ymldiff.JPG)
 

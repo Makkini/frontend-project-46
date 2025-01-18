@@ -2,7 +2,7 @@
 
 import { program } from 'commander';
 import readFile from './fileReader.js';
-import genDiff from './comparator.js';
+import buildDifference from './parsers.js';
 
 program
   .name('gendiff')
@@ -14,6 +14,6 @@ program
   .action((filepath1, filepath2) => {
     const data1 = readFile(filepath1);
     const data2 = readFile(filepath2);
-    console.log(genDiff(data1, data2));
+    console.log(buildDifference(data1, data2));
   });
 program.parse();
