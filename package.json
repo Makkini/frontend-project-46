@@ -25,7 +25,7 @@
     "lodash": "^4.17.21"
   },
   "bin": {
-    "gendiff": "src/gendiff.js"
+    "gendiff": "gendiff.js"
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",
