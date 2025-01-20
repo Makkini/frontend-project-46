@@ -14,14 +14,15 @@ const readFixtureFile = (filename) => fs.readFileSync(getFixturePath(filename), 
 const normalizedStr = (input) => input.trim().replace(/\s+/g, ' ');
 
 test('Сравнение двух JSON-файлов stylish format', () => {
-  const data1 = readFile('__fixtures__/file1.json');
-  const data2 = readFile('__fixtures__/file2.json');
+  const data1 = readFile(getFixturePath('file1.json'));
+  const data2 = readFile(getFixturePath('file2.json'));
   const expected = readFixtureFile('result.txt');
   expect(normalizedStr(buildDifference(data1, data2, 'stylish'))).toEqual(normalizedStr(expected));
 });
+
 test('Сравнение двух JSON-файлов plain format', () => {
-  const data1 = readFile('__fixtures__/file1.json');
-  const data2 = readFile('__fixtures__/file2.json');
+  const data1 = readFile(getFixturePath('file1.json'));
+  const data2 = readFile(getFixturePath('file2.json'));
   const expected = readFixtureFile('resultPlain.txt');
   expect(normalizedStr(buildDifference(data1, data2, 'plain'))).toEqual(normalizedStr(expected));
 });
@@ -36,15 +37,15 @@ test('Сравнение двух JSON-файлов json format', () => {
 });
 
 test('Сравнение двух YAML-файлов stylish format', () => {
-  const data1 = readFile('__fixtures__/file1.yml');
-  const data2 = readFile('__fixtures__/file2.yml');
+  const data1 = readFile(getFixturePath('file1.yml'));
+  const data2 = readFile(getFixturePath('file2.yml'));
   const expected = readFixtureFile('result.txt');
   expect(normalizedStr(buildDifference(data1, data2, 'stylish'))).toEqual(normalizedStr(expected));
 });
 
 test('Сравнение двух YAML-файлов plain format', () => {
-  const data1 = readFile('__fixtures__/file1.yml');
-  const data2 = readFile('__fixtures__/file2.yml');
+  const data1 = readFile(getFixturePath('file1.yml'));
+  const data2 = readFile(getFixturePath('file2.yml'));
   const expected = readFixtureFile('resultPlain.txt');
   expect(normalizedStr(buildDifference(data1, data2, 'plain'))).toEqual(normalizedStr(expected));
 });
