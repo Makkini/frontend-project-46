@@ -12,4 +12,6 @@
 ## Скриншоты тестов
 ![Json-diff](images/jsondiff.JPG)
 ![YML-diff](images/ymldiff.JPG)
-
+![nested-diff](images/nestedDiff.JPG)
+![plainFormat-diff](images/plainFormat.JPG)
+![jsonFormat-diff](images/jsonFormat.JPG)
