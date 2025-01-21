@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 import { program } from 'commander';
-import readFile from './src/fileReader.js';
-import buildDifference from './src/parsers.js';
+import readFile from '../src/fileReader.js';
+import buildDifference from '../src/parsers.js';
 
 program
   .name('gendiff')

@@ -13,7 +13,7 @@
   "license": "ISC",
   "author": "makkinni",
   "type": "module",
-  "main": "gendiff.js",
+  "main": "bin/gendiff.js",
   "scripts": {
     "test": "jest"
   },
@@ -25,7 +25,7 @@
     "lodash": "^4.17.21"
   },
   "bin": {
-    "gendiff": "gendiff.js"
+    "gendiff": "bin/gendiff.js"
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",
