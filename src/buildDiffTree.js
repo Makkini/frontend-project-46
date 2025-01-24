@@ -13,7 +13,7 @@ const buildDiffTree = (data1, data2) => {
     if (_.isObject(data1[key]) && _.isObject(data2[key])) {
       return { key, type: 'nested', children: buildDiffTree(data1[key], data2[key]) };
     }
-    if (data1[key] !== data2[key]) {
+    if (!_.isEqual(data1[key], data2[key])) {
       return {
         key, type: 'changed', oldValue: data1[key], newValue: data2[key],
       };

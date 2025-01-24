@@ -2,9 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { expect, test } from '@jest/globals';
-import yaml from 'js-yaml';
-import buildDifference from '../src/parsers.js';
-import readFile from '../src/fileReader.js';
+import parseData from '../src/parsers.js';
+import buildDiffTree from '../src/buildDiffTree.js';
+import chooseFormatter from '../src/formatters/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,48 +13,57 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 const readFixtureFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 const normalizedStr = (input) => input.trim().replace(/\s+/g, ' ');
 
-test('Сравнение двух JSON-файлов stylish format', () => {
-  const data1 = readFile(getFixturePath('file1.json'));
-  const data2 = readFile(getFixturePath('file2.json'));
-  const expected = readFixtureFile('result.txt');
-  expect(normalizedStr(buildDifference(data1, data2, 'stylish'))).toEqual(normalizedStr(expected));
-});
-
-test('Сравнение двух JSON-файлов plain format', () => {
-  const data1 = readFile(getFixturePath('file1.json'));
-  const data2 = readFile(getFixturePath('file2.json'));
-  const expected = readFixtureFile('resultPlain.txt');
-  expect(normalizedStr(buildDifference(data1, data2, 'plain'))).toEqual(normalizedStr(expected));
-});
-
-test('Сравнение двух JSON-файлов json format', () => {
-  const data1 = JSON.parse(readFixtureFile('file1.json'));
-  const data2 = JSON.parse(readFixtureFile('file2.json'));
-  const expected = readFixtureFile('resultJson.json');
-
-  const result = buildDifference(data1, data2, 'json');
-  expect(normalizedStr(result)).toEqual(normalizedStr(expected));
-});
-
-test('Сравнение двух YAML-файлов stylish format', () => {
-  const data1 = readFile(getFixturePath('file1.yml'));
-  const data2 = readFile(getFixturePath('file2.yml'));
-  const expected = readFixtureFile('result.txt');
-  expect(normalizedStr(buildDifference(data1, data2, 'stylish'))).toEqual(normalizedStr(expected));
-});
-
-test('Сравнение двух YAML-файлов plain format', () => {
-  const data1 = readFile(getFixturePath('file1.yml'));
-  const data2 = readFile(getFixturePath('file2.yml'));
-  const expected = readFixtureFile('resultPlain.txt');
-  expect(normalizedStr(buildDifference(data1, data2, 'plain'))).toEqual(normalizedStr(expected));
-});
-
-test('Сравнение двух YAML-файлов json format', () => {
-  const data1 = yaml.load(readFixtureFile('file1.yml'));
-  const data2 = yaml.load(readFixtureFile('file2.yml'));
-  const expected = readFixtureFile('resultJson.json');
-
-  const result = buildDifference(data1, data2, 'json');
-  expect(normalizedStr(result)).toEqual(normalizedStr(expected));
+test.each([
+  {
+    format: 'stylish',
+    ext: 'json',
+    file1: 'file1.json',
+    file2: 'file2.json',
+    expected: 'result.txt',
+  },
+  {
+    format: 'plain',
+    ext: 'json',
+    file1: 'file1.json',
+    file2: 'file2.json',
+    expected: 'resultPlain.txt',
+  },
+  {
+    format: 'json',
+    ext: 'json',
+    file1: 'file1.json',
+    file2: 'file2.json',
+    expected: 'resultJson.json',
+  },
+  {
+    format: 'stylish',
+    ext: 'yml',
+    file1: 'file1.yml',
+    file2: 'file2.yml',
+    expected: 'result.txt',
+  },
+  {
+    format: 'plain',
+    ext: 'yml',
+    file1: 'file1.yml',
+    file2: 'file2.yml',
+    expected: 'resultPlain.txt',
+  },
+  {
+    format: 'json',
+    ext: 'yml',
+    file1: 'file1.yml',
+    file2: 'file2.yml',
+    expected: 'resultJson.json',
+  },
+])('Сравнение двух $ext-файлов в формате $format', ({
+  format, file1, file2, expected,
+}) => {
+  const data1 = parseData(getFixturePath(file1));
+  const data2 = parseData(getFixturePath(file2));
+  const expectedFile = readFixtureFile(expected);
+  const diffTree = buildDiffTree(data1, data2);
+  const formatter = chooseFormatter(format);
+  const result = formatter(diffTree);
+  expect(normalizedStr(result)).toEqual(normalizedStr(expectedFile));
 });
