@@ -2,9 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { expect, test } from '@jest/globals';
-import parseData from '../src/parsers.js';
-import buildDiffTree from '../src/buildDiffTree.js';
-import chooseFormatter from '../src/formatters/index.js';
+import genDiff from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -59,11 +57,7 @@ test.each([
 ])('Сравнение двух $ext-файлов в формате $format', ({
   format, file1, file2, expected,
 }) => {
-  const data1 = parseData(getFixturePath(file1));
-  const data2 = parseData(getFixturePath(file2));
   const expectedFile = readFixtureFile(expected);
-  const diffTree = buildDiffTree(data1, data2);
-  const formatter = chooseFormatter(format);
-  const result = formatter(diffTree);
+  const result = genDiff(getFixturePath(file1), getFixturePath(file2), format);
   expect(normalizedStr(result)).toEqual(normalizedStr(expectedFile));
 });
